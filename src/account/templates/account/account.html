@@ -1,0 +1,51 @@
+{% extends 'base.html' %} {% block content %}
+
+<form class="form-signin" method="POST">
+  {% csrf_token %}
+  <h1 class="h3 mb-3 font-weight-normal text-center">Account</h1>
+  
+  {% if success_message %}
+  <div class="alert-success p-3 text-center my-2">{{ success_message }}</div>
+  {% endif %}
+
+  <input
+    type="email"
+    name="email"
+    id="inputEmail"
+    class="form-control"
+    placeholder="Email address"
+    required
+    autofocus
+    value="{{account_form.initial.email}}"
+  />
+  <input
+    type="text"
+    name="username"
+    id="inputUsername"
+    class="form-control"
+    placeholder="Username"
+    required
+    value="{{account_form.initial.username}}"
+  />
+  <!-- Field Errors -->
+  {% for field in account_form %} {% for err in field.errors %}
+  <p><small style="color: red">{{ err }}</small></p>
+  {% endfor %} {% endfor %}
+
+  <!-- Non Field Errors -->
+  {% if account_form.non_field_errors %}
+  <div style="color: red">
+    <p>{{ account_form.non_field_errors }}</p>
+  </div>
+  {% endif %}
+
+  <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">
+    Save Changes
+  </button>
+</form>
+
+<div class="d-flex flex-column">
+  <a class="text-center" href="{% url 'password_change' %}">Change Password</a>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %} {% block content %}
+
+<form class="form-signin" method="POST">
+  {% csrf_token %}
+  <h1 class="h3 mb-3 font-weight-normal text-center">Login</h1>
+  <input
+    type="email"
+    name="email"
+    id="inputEmail"
+    class="form-control"
+    placeholder="Email address"
+    required
+    autofocus
+  />
+  <input
+    type="password"
+    name="password"
+    id="inputPassword"
+    class="form-control"
+    placeholder="Password"
+    required
+  />
+  <!-- Field Errors -->
+  {% for field in login_form %} {% for err in field.errors %}
+  <p><small style="color: red">{{ err }}</small></p>
+  {% endfor %} {% endfor %}
+
+  <!-- Non Field Errors -->
+  {% if login_form.non_field_errors %}
+  <div style="color: red">
+    <p>{{ login_form.non_field_errors }}</p>
+  </div>
+  {% endif %}
+
+  <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">
+    Log in
+  </button>
+</form>
+
+<div class="d-flex flex-column">
+  <a class="text-center" href="{% url 'password_reset' %}">Forgot Password?</a>
+</div>
+{% endblock content %}
